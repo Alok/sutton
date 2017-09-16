@@ -1,0 +1,22 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+[packages]
+
+baselines = "*"
+gym = {extras = ["all"]}
+keras = "*"
+tensorflow = "*"
+numpy = "*"
+scipy = "*"
+matplotlib = "*"
+pandas = "*"
+h5py = "*"
+mujoco-py = "*"
+
+
+[dev-packages]
+pytest = "*"
+hypothesis = "*"
+
+
