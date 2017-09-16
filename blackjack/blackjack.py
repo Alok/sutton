@@ -3,11 +3,11 @@
 
 import random
 
-ITERS = int(1e3)
+ITERS = int(1e5)
 TOTALS = range(1, 22)
 CARDS = range(1, 11)
 
-S = {(player_total, dealer_showing) for player_total in TOTALS for dealer_showing in CARDS}
+S = {player_total for player_total in TOTALS}
 
 STICK = 0
 HIT = 1
@@ -40,7 +40,7 @@ class Policy(Table):
     def __call__(self, *x):
         if len(x) == 1:
             if isinstance(x[0], int):
-                return self[x]
+                return self[x[0]]
             else:
                 return self[x[0][0]]
         elif len(x) == 2:
@@ -111,25 +111,25 @@ if __name__ == '__main__':
         actions.append(a)
 
         s, r, done = env(a)
-        ((player_total, dealer_showing, dealer_total), turn) = s
+        ((player_total, dealer_total), turn) = s
 
-        states.append((player_total, dealer_showing))
+        states.append(player_total)
         rewards.append(r)
 
         while not done:
 
             if turn == PLAYER_TURN:
-                s = (player_total, dealer_showing)
+                s = player_total
                 a = player(s)
             elif turn == DEALER_TURN:
-                s = (dealer_total, dealer_showing)
+                s = dealer_total
                 a = dealer(s)
             actions.append(a)
 
             s, r, done = env(a)
 
-            ((player_total, dealer_showing, dealer_total), turn) = s
+            ((player_total, dealer_total), turn) = s
 
-            states.append((player_total, dealer_showing))
+            states.append(player_total)
             rewards.append(r)
             update(Q, states, actions)

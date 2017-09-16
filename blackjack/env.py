@@ -8,8 +8,7 @@ from blackjack import CARDS, DEALER_TURN, HIT, PLAYER_TURN, STICK, A, choice
 
 class Env:
     def __init__(self):
-        self.dealer_showing = choice(CARDS)
-        self.dealer_cards = [self.dealer_showing, choice(CARDS)]
+        self.dealer_cards = random.sample(CARDS, k=2)
         self.player_cards = random.sample(CARDS, k=2)
         self.turn = PLAYER_TURN  # player starts, dealer ends
         self.done = False
@@ -52,6 +51,6 @@ class Env:
         else:
             raise ValueError('expected HIT or STICK')
 
-        state = ((player_total, self.dealer_showing, dealer_total), self.turn)
+        state = ((player_total,  dealer_total), self.turn)
 
         return state, reward, self.done
